@@ -36,16 +36,10 @@ var _ = {};
   };
 
 function first(array,n){
-  if(n>0){  
-    var newArray= [];
-    for (var i=0; i<n; i++){
-      newArray.push(array[i]);
-    }
-  }
-  else{
-    newArray=array[0];    
-  } 
-  return newArray;
+function(array, n) {
+
+    return n === undefined ? array[array.length] : array.slice(0, n);
+  };
 }
 
 
@@ -54,7 +48,7 @@ function first(array,n){
   _.last = function(array, n) {
   };
 
-  function last(array,n){
+ last= function last(array,n){
   var len=array.length;
   if(n>0){  
     var newArray= [];
@@ -88,7 +82,6 @@ function each (fun, functi){
       }
     }
   }
-  return fun;
 };
 
 
@@ -184,7 +177,20 @@ function map(fun,functi){
       return item[key];
     });
   };
+//alternative
 
+function pluck(list,keys){
+  var newArray=[];
+  for (var i=0; i<list.length;i++){
+    for (var k in list[i]){
+      if (keys==k) {  
+        newArray.push(list[i][keys]);
+      }
+    }
+  }
+  return newArray;
+}
+ 
   // Calls the method named by functionOrKey on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
@@ -320,7 +326,16 @@ function map(fun,functi){
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
   };
-
+var shuffle= function (list){
+  var mixed= [];
+  while (mixed.length<list.length) {      
+    var lr=list[Math.floor(Math.random()*list.length)]
+    if (mixed.indexOf(lr)<0){
+      mixed.push(lr);
+    }   
+  }
+    return mixed;
+};
 
   /**
    * Note: This is the end of the pre-course curriculum. Feel free to continue,
