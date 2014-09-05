@@ -35,10 +35,38 @@ var _ = {};
     return n === undefined ? array[0] : array.slice(0, n);
   };
 
+function first(array,n){
+  if(n>0){  
+    var newArray= [];
+    for (var i=0; i<n; i++){
+      newArray.push(array[i]);
+    }
+  }
+  else{
+    newArray=array[0];    
+  } 
+  return newArray;
+}
+
+
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
   };
+
+  function last(array,n){
+  var len=array.length;
+  if(n>0){  
+    var newArray= [];
+    for (var i=1; i<=n; i++){
+      newArray.push(array[len-i]);
+    }
+  }
+  else{
+    newArray=array[(len-1)];    
+  } 
+  return newArray;
+}
 
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
@@ -47,6 +75,24 @@ var _ = {};
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
   };
+function each (fun, functi){
+  if (Array.isArray(fun)){
+    for (var i=0;i<fun.length ;i++){
+      functi(fun[i]); 
+    }
+  }
+  else if (typeof fun==="object"){
+    for (var key in fun){
+      if(fun.hasOwnProperty(key)){
+        functi(fun[key]);
+      }
+    }
+  }
+  return fun;
+};
+
+
+
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
@@ -68,17 +114,45 @@ var _ = {};
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
   };
-
+function filter (list, calling){
+  var newarray=[];
+  if(Array.isArray(list)){
+    for( var i =0;i<list.length;i++){
+      if(calling(list[i])){
+        newarray.push(list[i]);
+      }      
+    }
+  }
+  return newarray;
+}
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
   };
-
+function reject (list, calling){
+  var newarray=[];
+  if(Array.isArray(list)){
+    for( var i=0;i<list.length;i++){
+      if(calling(list[i])!==true){
+        newarray.push(list[i]);
+      }
+    }
+  }
+  return newarray;
+}
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
   };
-
+function uniq(list){
+  var newArray=[];
+  for (var i =0; i<list.length;i++){
+    if(newArray.indexOf(list[i])<0){
+      newArray.push(list[i]);
+    }
+  }
+  return newArray;
+}
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
@@ -86,7 +160,13 @@ var _ = {};
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
   };
-
+function map(fun,functi){
+  var blue=[];
+  each(fun, function(i){
+    blue.push(functi(i))
+  })
+  return blue;
+}
   /*
    * TIP: map is really handy when you want to transform an array of
    * values into a new array of values. _.pluck() is solved for you
