@@ -286,6 +286,14 @@ function some (list, calling){
   // exists in obj
   _.defaults = function(obj) {
   };
+function defaults(object, defob){
+  for(var k in defob){
+    if(object.hasOwnProperty(k)===false){
+      object[k]= defob[k];
+    }
+  }
+  return object;
+}
 
 
   /**
