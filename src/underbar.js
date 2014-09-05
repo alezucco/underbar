@@ -190,7 +190,7 @@ function pluck(list,keys){
   }
   return newArray;
 }
- 
+
   // Calls the method named by functionOrKey on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
@@ -229,13 +229,37 @@ function pluck(list,keys){
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
   };
-
+function every (list, calling){
+  var newarray=[];
+  if(Array.isArray(list)){
+    for( var i =0;i<list.length;i++){
+      if(calling(list[i])){
+        newarray.push(list[i]);
+      } 
+    } 
+  }
+  if(newarray.length===list.length){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
   };
-
+function some (list, calling){
+  if(Array.isArray(list)){
+    for(var i =0;i<list.length;i++){
+      if(calling(list[i])){
+        return list[i]
+      }
+    }
+    return false; 
+  }
+}
 
   /**
    * OBJECTS
