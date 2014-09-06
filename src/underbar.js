@@ -9,7 +9,10 @@ var _ = {};
   // iterator when the user does not pass one in, this will be handy.
   _.identity = function(val) {
   };
+function always(n){
 
+  return arguments[0];
+}
   /**
    * COLLECTIONS
    * ===========
@@ -233,7 +236,19 @@ function pluck(list,keys){
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
   };
+function reduce(list, callback, memo){
+  if(memo==undefined){
+    memo=list[0];
+  }
+    for (var i=0;i<list.length;i++){
+      memo= callback(list[i], memo);
+    }
+  
 
+  return memo
+}
+
+}
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
@@ -297,6 +312,7 @@ function every (list, calling){
   };
 function some (list, calling){
   if(Array.isArray(list)){
+    calling= calling||always
     for(var i =0;i<list.length;i++){
       if(calling(list[i])){
         return list[i]
