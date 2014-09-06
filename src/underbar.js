@@ -245,7 +245,24 @@ function pluck(list,keys){
       return item === target;
     }, false);
   };
+//alternative
+function contains(list, val){
+  if(Array.isArray(list)){
 
+    if (list.indexOf(val)>=0){
+      return true;
+    } 
+  }
+  else {
+    for (var k in list){
+      if (list[k]==val){
+        return true 
+      }
+    }
+  }
+  return false;
+}
+  
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
@@ -255,10 +272,16 @@ function every (list, calling){
   var newarray=[];
   if(Array.isArray(list)){
     for( var i =0;i<list.length;i++){
+      calling=calling||always
       if(calling(list[i])){
         newarray.push(list[i]);
-      } 
-    } 
+      
+        
+
+      }
+      
+    }
+  
   }
   if(newarray.length===list.length){
     return true;
