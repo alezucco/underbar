@@ -281,6 +281,21 @@ function some (list, calling){
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
   };
+  function extend(obj1,obj2,obj3){
+  for (var k in obj2){
+    
+      obj1[k]=obj2[k]
+  
+  }
+  for (var l in obj3){
+    
+      obj1[l]=obj3[l]
+  
+  }
+  
+  return obj1
+}
+
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
