@@ -43,6 +43,8 @@ function(array, n) {
 }
 
 
+
+
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
@@ -50,12 +52,19 @@ function(array, n) {
 
  last= function last(array,n){
   var len=array.length;
-  if(n>0){  
+  if(n>=0 && n<array.length){  
     var newArray= [];
     for (var i=1; i<=n; i++){
       newArray.push(array[len-i]);
     }
   }
+  else if (n>=array.length) {
+    var newArray= [];
+    n=array.length
+    for (var i=1; i<=n; i++){
+      newArray.push(array[len-i]);
+    }
+  }  
   else{
     newArray=array[(len-1)];    
   } 
@@ -89,7 +98,7 @@ function each (fun, functi){
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
-  _.indexOf = function(array, target){
+  _.indexsOf = function(array, target){
     // TIP: Here's an example of a function that needs to iterate, which we've
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
@@ -103,6 +112,19 @@ function each (fun, functi){
 
     return result;
   };
+
+ //alternative
+  function indexedOf(list,val){
+  var count=0;
+  for (var i=0;i<list.length;i++){
+    count++
+    if(val==list[i]){
+      return count-1; 
+    }
+  }
+      return -1;
+}
+
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
