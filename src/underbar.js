@@ -422,6 +422,7 @@ function defaults(object, defob){
   _.memoize = function(func) {
   };
 
+
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
   //
@@ -430,6 +431,12 @@ function defaults(object, defob){
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
   };
+    function delay(func, wait) {
+      return setInterval(function(){ 
+        return func.apply(null, args); 
+      }
+      , wait);
+    };
 
 
   /**
