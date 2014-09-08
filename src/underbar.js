@@ -422,7 +422,21 @@ function defaults(object, defob){
   _.memoize = function(func) {
   };
 
+  function memoize(func, context) {
+    var obj = {};
+    return function() {
+      
+      var args = JSON.stringify(arguments);
 
+      if(obj[args]){
+        return obj[args];
+      } else {
+        obj[args] = func.apply(null, arguments);
+      }
+
+      return obj[args];
+    };
+  };
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
   //
