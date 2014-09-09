@@ -157,32 +157,50 @@ _.each = function(collection, iterator) {
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
-    var isInitialized = arguments.length > 2;
-    if (collection == null) collection = [];
-    _.each(collection, function(item, index, collection){
-      accumulator = isInitialized ?
-        iterator(accumulator, item, index, collection) :
-        isInitialized=true, item;
-    });
-    // if (!isInitialized) throw new TypeError("reduce() received an empty collection and no accumulator.");
-    return isInitialized ? accumulator : null;
+    if(Array.isArray(collection)) {
+      if (accumulator === undefined) {
+        accumulator = collection[0];
+      }
+      for (var i = 0; i < collection.length; i++) {
+        accumulator = iterator(collection[i], accumulator);
+      }
+    } else {
+      for (var k in collection) {
+        accumulator = iterator(collection[k], accumulator);
+      }
+    }
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
-    return _.reduce(collection, function(wasFound, item) {
-      return wasFound || item === target;
-    }, false);
+    var found = false;
+    if(Array.isArray(collection)) {
+      for (var i = 0; i < collection.length; i++) {
+        if (collection[i] === target) { found = true; }
+      }
+    } else {
+      for (var k in collection) {
+        if (collection[k] === target) {found = true; }
+      }
+    }
+    return found;
+
   };
 
 // FIXME: All these should return short on the first positive test.
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    if (typeof iterator === 'undefined') iterator = _.identity;
-    return _.reduce(collection, function(everySoFar, item){
-      return everySoFar && !!iterator(item);
-    }, true);
+    var result;
+    if (iterator === undefined) {
+      result = _.filter(collection, function(x) {
+        if (x) { return true; } else { return false; }
+      });
+    } else {
+      result = _.filter(collection, iterator);
+    }
+    return result.length === Object.keys(collection).length;
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
@@ -382,9 +400,9 @@ _.each = function(collection, iterator) {
   _.intersection = function(firstAr) {
     var args = Array.prototype.slice.call(arguments);
     _.uniq(firstAr)
-    
+
     _.indexOf(otherAr, cell) >= 0
-    
+
   };
 
   // Produce an array that contains every item shared between all the
