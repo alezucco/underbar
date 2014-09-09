@@ -150,7 +150,7 @@ _.each = function(collection, iterator) {
   // You can pass in an initialValue that is passed to the first iterator
   // call. If initialValue is not explicitly passed in, it should default to the
   // first element in the collection.
-  //
+
   // Example:
   //   var numbers = [1,2,3];
   //   var sum = _.reduce(numbers, function(total, number){
@@ -313,14 +313,18 @@ _.each = function(collection, iterator) {
    */
 
   // Randomizes the order of an array's contents.
-  _.shuffle = function(sourceAr){ // "inside-out" Fisher–Yates shuffling copy algorithm. Worst time: O(n)
-    var destAr = [], rndIx;
-    for (var i = 0 ; i < sourceAr.length ;  i++) {
-      rndIx = Math.floor(Math.random() * (i+1));
-      if (rndIx != i) destAr[i] = destAr[rndIx];
-      destAr[rndIx] = sourceAr[i];
+  _.shuffle = function(sourceArr){ // "inside-out" Fisher–Yates shuffling copy algorithm. Worst time: O(n)
+    var swap = function(array, a, b) {
+      var temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
     }
-  return destAr;
+    var result = sourceArr.slice(0);
+    for (var a = 0; a < result.length; a++) {
+      var b = Math.floor(Math.random() * (result.length - a)) + a;
+      swap(result, a, b);
+    }
+    return result;
   }
 
   /**
@@ -399,9 +403,8 @@ _.each = function(collection, iterator) {
   // every item shared between all the passed-in arrays.
   _.intersection = function(firstAr) {
     var args = Array.prototype.slice.call(arguments);
-    _.uniq(firstAr)
-
-    _.indexOf(otherAr, cell) >= 0
+    _.uniq(firstAr);
+    _.indexOf(otherAr, cell) >= 0;
 
   };
 
