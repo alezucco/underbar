@@ -265,15 +265,15 @@ _.each = function(collection, iterator) {
   // Return a function that can be called at most one time. Subsequent calls
   // should return the previously returned value.
   _.once = function(func) {
-    var alreadyCalled = false;
-    var result;
-    return function() {
-      if (!alreadyCalled) {
-        result = func.apply(this, arguments); // this === window
-        alreadyCalled = true;
+    var calledFn=false;
+    var result=undefined;
+    return function(){
+      if(!calledFn){
+        calledFn=true;
+        result= func.apply(this,arguments)
       }
       return result;
-    };
+    }
   };
 
   // Memoize an expensive function by storing its results. You may assume
@@ -283,12 +283,16 @@ _.each = function(collection, iterator) {
   // already computed the result for the given argument and return that value
   // instead, if possible.
   _.memoize = function(func) {
-    var memoTab = {};
-    return function(param) {
-      var key = (typeof param) + '~' + param;
-      if (memoTab.hasOwnProperty(key)) return memoTab[key];
-      return (memoTab[key] = func(param));
-    };
+    var memory= {};
+
+    return function(){
+    var args=JSON.stringify(arguments)
+      if (memory[args]===undefined){
+        memory[args]=func.apply(null,arguments);
+      }
+       return memory[args];
+    }
+
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -303,8 +307,12 @@ _.each = function(collection, iterator) {
 //       return func.apply(null, Array.prototype.slice.call(arguments, 2)); }, wait);
 //   };
   _.delay = function(func, wait) {
-    var args = Array.prototype.slice.call(arguments, 2);
-    return setTimeout(function(){ return func.apply(null, args); }, wait);
+    var args = Array.prototype.slice.call(arguments).slice(2);
+    var fn= function(){
+   return func.apply(null,args);
+    }
+   return  setTimeout(fn,wait);
+
   };
 
   /**
